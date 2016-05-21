@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index'); // link file from "routes/index.js"  ลิ้งจริง
 var users = require('./routes/users'); // link file from "routes/users.js"
 var message = require('./routes/message'); // link file from "routes/message.js"
+var webboard = require('./routes/webboard');
 
 var app = express();
 
@@ -28,6 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);  // map function with Variable at line 8 ลิ้งที่ต่อหลัง URL ของ web browser
 app.use('/users', users); // map function with Variable at line 9
 app.use('/message', message); // map function with Variable at line 10
+app.use('/webboard', webboard);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
