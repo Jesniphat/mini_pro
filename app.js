@@ -6,8 +6,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var routes = require('./routes/index'); // link file from "routes/index.js"  ลิ้งจริง
-var users = require('./routes/users'); // link file from "routes/users.js"
+// var users = require('./routes/users'); // link file from "routes/users.js"
 var message = require('./routes/message'); // link file from "routes/message.js"
+var profile = require('./routes/profile');
 var test = require('./routes/test');
 
 var app = express();
@@ -27,8 +28,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);  // map function with Variable at line 8 ลิ้งที่ต่อหลัง URL ของ web browser
-app.use('/users', users); // map function with Variable at line 9
+// app.use('/users', users); // map function with Variable at line 9
 app.use('/message', message); // map function with Variable at line 10
+app.use('/profile', profile);
 app.use('/test', test);
 
 // catch 404 and forward to error handler
