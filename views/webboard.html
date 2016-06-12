@@ -1,11 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="MiniSocial">
   <head>
     <meta charset="utf-8">
     <title>MiniPro</title>
   </head>
   <body>
     <h1>My Mini  Pro</h1>
-    <h2>Webboard</h2>
+      <div ng-controller="HeaderController">
+        <h3>{{title}}</h3>
+        <button ng-click="listTopic()">Load topic</button>
+        <table>
+          <tr ng-repeat="t in topic">
+            <td>{{$index+1}}</td>
+            <td>{{t.title}}</td>
+          </tr>
+        </table>
+      </div>
   </body>
+  <script src="/angular/angular.min.js"></script>
+  <script src="/angular/ang-db.js"></script>
+  <script src="/angular/webboard-app.js"></script>
 </html>
