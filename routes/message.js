@@ -10,13 +10,13 @@ router.get("/", function(req, res, next) {
 ////////////////////////////////////////////////////////////////////////////////
 router.post("/feed", function(req, res, next) {
   console.log("req = ", req.body);
-  // res.send("Webboard Header List");
-  var webboard_header = [];
-  for(var i = 1; i <= 3; i++){
-    webboard_header.push({id:1, title:"หัวข้อ webboard ที่ " + i, content: "เนื้อหา webboard ที่ " + i})
-  }
-  // console.log("webboard_header = ", webboard_header);
-  res.json(webboard_header);
+  webboard.listHeader(function(errorMessage){
+    console.log(errorMessage);
+    res.send("error");
+  }, function(data){
+    // console.log("data : ", data);
+    res.json(data);
+  });
 });
 
 ////////////////////////////////////////////////////////////////////////////////

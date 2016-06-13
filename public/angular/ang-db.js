@@ -1,12 +1,13 @@
 var db = angular.module('db', []);
 db.service('dbSvc', ['$rootScope', '$window', '$q', '$filter', '$http',
   function($rootScope, $window, $q, $filter, $http){
-    var request = function(post_url,action, param) {
+    var request = function(api_url,action, param) {
       var deferred = $q.defer();
-      var url = post_url;
+      var url = api_url;
       $http.post(url + '/' + action, param).then(function(response) {
         deferred.resolve(response.data);
-      }, function() {
+      }, function(error) {
+        console.log("error = ", error);
         deferred.reject(false);
       });
       return deferred.promise;

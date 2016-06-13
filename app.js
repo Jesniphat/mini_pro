@@ -70,5 +70,8 @@ app.use(function(err, req, res, next) {
   });
 });
 
+database = require("./library/config");
+webboard = require("./library/database");
+
 
 module.exports = app;
