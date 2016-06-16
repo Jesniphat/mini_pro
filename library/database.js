@@ -1,5 +1,5 @@
 module.exports = new function() {
-  var db = database.init();
+  var db = database.init(); //เรียก method init จาก class database
   
   this.listHeader = function(callbackError, callbackSuccess) {
     var sql = "SELECT * FROM webboard_header WHERE status = 'A'";

@@ -70,7 +70,7 @@ app.use(function(err, req, res, next) {
   });
 });
 
-database = require("./library/config");
+database = require("./library/config"); // database จะกลายเป็นคลาสที่สร้าง instance object แล้ว แล้วก็เป็นชื่อว่า database
 webboard = require("./library/database");
 
 
