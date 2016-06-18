@@ -1,7 +1,6 @@
 module.exports = new function() {
-  var db = database.init(); //เรียก method init จาก class database
-  
   this.listHeader = function(callbackError, callbackSuccess) {
+    var db = database.init(); //เรียก method init จาก class database
     var sql = "SELECT * FROM webboard_header WHERE status = 'A'";
     db.query(sql, function(err, rows, fields){
       if(err){
