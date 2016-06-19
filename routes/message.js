@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+var webboard = require("../library/database-webboard");
 
 /* Index of message file. */
 router.get("/", function(req, res, next) {

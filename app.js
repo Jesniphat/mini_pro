@@ -14,7 +14,6 @@ var authen = require('./routes/authen');
 var register = require('./routes/register');
 
 var test = require('./routes/test');
-
 var app = express();
 
 // view engine setup
@@ -69,9 +68,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
-database = require("./library/config"); // database จะกลายเป็นคลาสที่สร้าง instance object แล้ว แล้วก็เป็นชื่อว่า database
-webboard = require("./library/database");
-
 
 module.exports = app;

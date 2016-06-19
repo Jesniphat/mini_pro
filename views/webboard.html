@@ -6,18 +6,18 @@
   </head>
   <body>
     <h1>My Mini  Pro</h1>
-      <div ng-controller="HeaderController">
-        <h3>{{title}}</h3>
-        <button ng-click="listTopic()">Load topic</button>
-        <table>
-          <tr ng-repeat="t in topic">
-            <td>{{$index+1}}</td>
-            <td>{{t.title}}</td>
-          </tr>
-        </table>
-      </div>
+     <a ui-sref="webboardList">Home</a>
+     <a ui-sref="topic">Topic</a>
+     <a ui-sref="create">Create</a>
+
+    <div ui-view></div>
   </body>
-  <script src="/angular/angular.min.js"></script>
-  <script src="/angular/ang-db.js"></script>
-  <script src="/angular/webboard-app.js"></script>
 </html>
+
+<script src="/angular/angular.min.js"></script>
+<script src="/angular/angular-ui-router.js"></script>
+<script src="/angular/ang-db.js"></script>
+<script src="/angular/controller/webboard/webboard-app.js"></script>
+<script src="/angular/controller/webboard/webboard-control-list.js"></script>
+<script src="/angular/controller/webboard/webboard-control-topic.js"></script>
+<script src="/angular/controller/webboard/webboard-control-create.js"></script>
