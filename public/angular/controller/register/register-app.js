@@ -25,6 +25,7 @@ var miniSocialRegister = angular.module("MiniSocial",['db']);
         dbSvc.request("/register","save", param).then(function(result) {
           console.log(result);
           if(result.id){
+            // console.log("result.id = ", result.id);
             location.href = "/authen/login";
           }else {
             console.log(result.error);
