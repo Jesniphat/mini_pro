@@ -1,7 +1,10 @@
-module.exports = new function() {
-  var conn = require('./config'); // conn จะกลายเป็นคลาสที่สร้าง instance object แล้ว แล้วก็เป็นชื่อว่า database
+var promise = require('bluebird');
+var conn = require('./config'); // conn จะกลายเป็นคลาสที่สร้าง instance object แล้ว แล้วก็เป็นชื่อว่า database
 
-  this.listHeader = function(callbackError, callbackSuccess) {
+module.exports = new function() {
+
+///////////////  listHeader method  ////////////////////////////////////////////
+  this.listHeader = function(callbackSuccess, callbackError) {
     var db = conn.init(); //เรียก method init จาก class database
     var sql = "SELECT * FROM webboard_header WHERE status = 'A'";
     db.query(sql, function(err, rows, fields){
@@ -24,9 +27,13 @@ module.exports = new function() {
     });
     db.end();
   }
+
+///////////////////  getheader method  /////////////////////////////////////////
   this.getHeader = function(header_id) {
 
   }
+
+//////////////////  saveHeader method  /////////////////////////////////////////
   this.saveHeader = function(user_id, title, content) {
 
   }
@@ -36,4 +43,6 @@ module.exports = new function() {
   this.saveReply = function(user_id, header_id, content) {
 
   }
-}
+  
+////////////////////////////////////////////////////////////////////////////////
+} /* End module.exports here */

@@ -1,27 +1,60 @@
+var promise = require('bluebird');
+var conn = require('./config'); // conn จะกลายเป็นคลาสที่สร้าง instance object แล้ว แล้วก็เป็นชื่อว่า database
+
 module.exports = new function() {
-  var conn = require('./config'); // conn จะกลายเป็นคลาสที่สร้าง instance object แล้ว แล้วก็เป็นชื่อว่า database
-  this.createLogin = function(loginname, paeeword, displayname, callbackok, callbackerror) {
-    var db = conn.init();
-    var ifok = function(){
-      var sql = "insert into member (loginname, password, displayname) ";
-              + "values ('" + loginname + "', '" + password + "', '" + displayname + "')";
+
+/////////////////////////////   Create Login Method   /////////////////////////////////////////
+  this.createLogin = function(loginname, password, displayname, callbackok, callbackerror) {
+    var db = conn.init(); //เรียก method init จาก class database
+    var $scope = {};
+
+    var checkLoginDuplicate = function(){
+      var deferred = promise.pending();
+      var sql = "select id from member where login_name = '" + loginname + "'";
       db.query(sql, function(err, rows, fields){
         if(err){
-          console.log("err : ", err);
-          callbackerror(err.error);
-        } else if (rows.length == 0) {
-          callbackerror("Error Create new Login.");
-        } else {
-          callbackok(rows.insertId);
+          deferred.reject(err.message);
+        }else if (rows.length > 0) {
+          console.log("rows = ", rows);
+          deferred.reject("Duplicate Data Can't use this Login");
+        }else {
+          deferred.resolve("Can use this Login name.");
         }
       });
+      return deferred.promise;
     }
-    var ifError = function(message) {
-      callbackerror(message);
+
+    var insertLogin = function(){
+      console.log("Arguments Duplicate = ",arguments);
+      var deferred = promise.pending();
+
+      var sql = "INSERT INTO member (login_name, password, display_name) "
+              + "VALUES ('" + loginname + "', '" + password + "', '" + displayname + "')";
+
+      db.query(sql, function(err, rows, fields){
+        if(err){
+          console.log(err);
+          deferred.reject(err.message);
+        }else if (rows == 0) {
+          deferred.reject("Error create Login");
+        }else {
+          $scope.login_id = rows.insertId;
+          deferred.resolve(rows.insertId);
+        }
+      });
+      return deferred.promise;
     }
-    var ifDuplicate = function() {
-      callbackerror("Login นี้ไม่ส่มารถใช้งานได้")ว
-    }
-    this.checkLoginDuplicate(loginname, ifox, ifDuplicate, ifError);
+
+    checkLoginDuplicate()
+    .then(insertLogin)
+    .then(function() {
+      console.log("from promise = ", arguments);
+      callbackok($scope.login_id);
+    }).catch(function(e){
+  	  console.log(e);
+      callbackerror(e);
+  	});
   }
-}
+
+////////////////////////////////////////////////////////////////////////////////
+} /* End module.exports here */

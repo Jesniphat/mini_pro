@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var promise = require('bluebird');
 
 var routes = require('./routes/index'); // link file from "routes/index.js"  ลิ้งจริง
 var users = require('./routes/users'); // link file from "routes/users.js"

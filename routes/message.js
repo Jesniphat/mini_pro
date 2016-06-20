@@ -11,12 +11,12 @@ router.get("/", function(req, res, next) {
 ////////////////////////////////////////////////////////////////////////////////
 router.post("/feed", function(req, res, next) {
   console.log("req = ", req.body);
-  webboard.listHeader(function(errorMessage){
-    console.log(errorMessage);
-    res.send("error");
-  }, function(data){
+  webboard.listHeader(function(data){
     // console.log("data : ", data);
     res.json(data);
+  }, function(errorMessage){
+    console.log(errorMessage);
+    res.send("error");
   });
 });
 
