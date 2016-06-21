@@ -2,21 +2,39 @@ var express = require("express");
 var router = express.Router();
 var webboard = require("../library/database-webboard");
 
-/* Index of message file. */
-router.get("/", function(req, res, next) {
-  // res.send("Index ของ File Message.");
-  res.send("Message controller");
+router.use(function(req, res, next){
+  console.log("perrmission : ", permission.readToken(req));
+  if(permission.isLogin(req)){
+    next();
+  }else {
+    res.json({
+      status:false,
+      error: "Access Denied"
+    });
+  }
 });
+
+/* Index of message file. */
+// router.get("/", function(req, res, next) {
+//   console.log("perrmission : ", permission.readToken(req));
+//   res.send("Message controller");
+// });
 
 ////////////////////////////////////////////////////////////////////////////////
 router.post("/feed", function(req, res, next) {
-  console.log("req = ", req.body);
+  console.log("perrmission : ", permission.readToken(req));
+  console.log("cookie = ", req.cookies);
   webboard.listHeader(function(data){
-    // console.log("data : ", data);
-    res.json(data);
+    res.json({
+      status:true,
+      data:data
+    });
   }, function(errorMessage){
     console.log(errorMessage);
-    res.send("error");
+    res.json({
+      status:false,
+      error:errorMessage
+    });
   });
 });
 

@@ -4,7 +4,12 @@ miniSocial.controller("webboardListController", function($scope,dbSvc){
   $scope.listTopic = function(){
     dbSvc.request("/message","feed", {}).then(function(result) {
       console.log(result);
-      $scope.topic = result;
+      if(result.status === true){
+        $scope.topic = result.data;
+      } else {
+        alert(result.error);
+      }
+
     });
   };
 

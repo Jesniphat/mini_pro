@@ -70,4 +70,6 @@ app.use(function(err, req, res, next) {
   });
 });
 
+permission = require("./library/permission")
+
 module.exports = app;

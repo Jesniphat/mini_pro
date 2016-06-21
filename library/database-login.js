@@ -1,5 +1,5 @@
-var promise = require('bluebird');
-var conn = require('./config'); // conn จะกลายเป็นคลาสที่สร้าง instance object แล้ว แล้วก็เป็นชื่อว่า database
+var promise     = require('bluebird');
+var conn        = require('./config'); // conn จะกลายเป็นคลาสที่สร้าง instance object แล้ว แล้วก็เป็นชื่อว่า database
 
 module.exports = new function() {
 
@@ -55,6 +55,42 @@ module.exports = new function() {
       callbackerror(e);
   	});
   }
+
+/////////////// checl login method  //////////////////////////////////////////////////
+  this.checkLogin = function(login, pass, callbackok, callbackerror) {
+    var db = conn.init();
+    var $scope = {};
+
+    var checkLoginPass = function(){
+      var deferred = promise.pending();
+      var sql = "SELECT * FROM member WHERE  login_name = '" + login
+              + "' AND password = '" + pass + "' AND `status` = 'A'";
+
+      db.query(sql, function(err, rows, fields){
+        if(err){
+          console.log("Login error : ", err);
+          deferred.reject(err.message);
+        }else if (rows.length == 0) {
+          deferred.reject("Invalid login");
+        }else {
+          $scope.user_id = rows[0].id;
+          deferred.resolve("Login Ok");
+        }
+      });
+      return deferred.promise;
+    }
+
+
+    checkLoginPass()
+    .then(function() {
+      console.log("checkLogin from promise = ", arguments);
+      callbackok($scope.user_id);
+    }).catch(function(e){
+  	  console.log(e);
+      callbackerror(e);
+  	});
+  }
+
 
 ////////////////////////////////////////////////////////////////////////////////
 } /* End module.exports here */
