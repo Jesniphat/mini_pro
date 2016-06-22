@@ -1,5 +1,5 @@
-var db = angular.module('db', []);
-db.service('dbSvc', ['$rootScope', '$window', '$q', '$filter', '$http',
+angular.module('db', [])
+.service('dbSvc', ['$rootScope', '$window', '$q', '$filter', '$http',
   function($rootScope, $window, $q, $filter, $http){
     var request = function(api_url,action, param) {
       var deferred = $q.defer();

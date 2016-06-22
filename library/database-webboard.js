@@ -34,15 +34,49 @@ module.exports = new function() {
   }
 
 //////////////////  saveHeader method  /////////////////////////////////////////
-  this.saveHeader = function(user_id, title, content) {
+  this.saveHeader = function(user_id, title, content, callbackok, callbackerror) {
+    var db = conn.init();
+    var $scope = {};
 
+    var insertTopic = function(){
+      var deferred = promise.pending();
+      var sql = "INSERT INTO webboard_header(title, content, status, postby_member) "
+              + "VALUES ('" + title + "', '" + content + "', 'A', " + user_id + ")";
+      console.log("Sql = ", sql);
+
+      db.query(sql, function(err, rows, fields){
+        if(err){
+          console.log("Insert error : ", err);
+          deferred.reject(err.message);
+        }else if (rows.length == 0) {
+          deferred.reject("ไม่สามารถบันทึกข้อมูลได้");
+        }else {
+          $scope.topic_id = rows.insertId;
+          deferred.resolve("Insert Ok");
+        }
+      });
+      return deferred.promise;
+    }
+
+    insertTopic()
+    .then(function() {
+      console.log("Data from promise = ", arguments);
+      callbackok($scope.topic_id);
+    }).catch(function(e){
+  	  console.log(e);
+      callbackerror(e);
+  	});
   }
+
+//////////////  get reply method   /////////////////////////////////////////////
   this.getReply = function(header_id) {
 
   }
+
+/////////////  save reply method   /////////////////////////////////////////////
   this.saveReply = function(user_id, header_id, content) {
 
   }
-  
+
 ////////////////////////////////////////////////////////////////////////////////
 } /* End module.exports here */

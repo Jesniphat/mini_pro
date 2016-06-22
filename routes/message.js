@@ -52,8 +52,18 @@ router.get("/reply/:id", function(req, res, next) {
 });
 ////////////////////////////////////////////////////////////////////////////////
 router.post("/save", function(req, res, next) {
-  console.log("save = ", req.query);
-  res.send("Save Success");
+  webboard.saveHeader(permission.getID(req), req.body.title, req.body.content, function(id){
+    res.json({
+      status:true,
+      id:id
+    });
+  }, function(errorMessage){
+    console.log("error m : ", errorMessage);
+    res.json({
+      status:false,
+      error:errorMessage
+    });
+  });
 });
 ////////////////////////////////////////////////////////////////////////////////
 router.post("/reply", function(req, res, next) {
